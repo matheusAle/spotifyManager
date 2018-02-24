@@ -1,0 +1,71 @@
+
+@import '../node_modules/reset-css/reset.css';
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '~@angular/material/theming';
+
+
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+  $font-family: 'Roboto',
+  $headline: mat-typography-level(40px, 48px, 500),
+  $body-1: mat-typography-level(20px, 24px, 300)
+);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($custom-typography);
+
+
+/* definição de estilo da scrollbar do app*/
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkgray;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #303030;
+}
+
+/* final: definição de estilo da scrollbar do app*/
+
+/* defininção do estido dos componentes de arastart e soltar */
+/*veja: https://github.com/bevacqua/dragula#css*/
+.gu-mirror {
+  box-shadow: 2px 2px 5px 0 #303030;
+  background-color: darkmagenta;
+  cursor: grabbing;
+  position: fixed;
+  z-index: 9999;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+
+  img {
+    border-radius: 100%;
+    margin: 0;
+    width: 50px;
+  }
+
+  .mat-ripple-element {
+    display: none;
+  }
+
+  .mat-line {
+    position: absolute;
+    top: 20px;
+    left: 70px;
+    font-size: 18px;
+  }
+}
+
+/* final: defininção do estido dos componentes de arastart e soltar */

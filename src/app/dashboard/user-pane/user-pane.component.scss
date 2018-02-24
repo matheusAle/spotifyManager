@@ -1,0 +1,41 @@
+@import '../../vars.app';
+
+.container {
+  width: $painel-user-width;
+  .card-user {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 20px 20px 10px;
+    width: $painel-user-width;
+
+    background-image: url("../../../assets/user-bg.png");
+
+    img {
+      width: 70px;
+      border-radius: 100%;
+    }
+
+    .perfil-info {
+      h4 {
+        font-size: 25px;
+        margin-bottom: 5px;
+      }
+      h5 {
+        font-size: 16px;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .playlists {
+    h3 {
+      margin-top: 20px;
+      padding-bottom: 5px;
+      margin-bottom: 0;
+    }
+
+  }
+
+}

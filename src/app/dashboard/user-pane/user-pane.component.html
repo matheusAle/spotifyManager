@@ -1,0 +1,28 @@
+<section class="container mat-typography">
+
+  <div class="card-user">
+    <div class="perfil-image">
+      <img [src]="api.usuario.prifile_image || 'assets/icon-user.png'">
+    </div>
+    <div class="perfil-info">
+      <h4>{{ api.usuario.display_name || api.usuario.id }}</h4>
+      <h5> {{ api.usuario.email }}</h5>
+    </div>
+  </div>
+  
+  <div class="playlists">
+    <mat-divider></mat-divider>
+    <h3 mat-subheader>Suas Playlists</h3>
+    
+    <mat-nav-list [dragula]='"playlist-bag"'>
+      <div *ngFor="let p of playlists" [id]="p.id">
+        <mat-list-item *ngIf="p.canEdit">
+          <img mat-list-icon [src]="p.image_url">
+          <a matLine>{{ p.name }}</a>
+        </mat-list-item>
+      </div>
+      
+
+    </mat-nav-list>
+  </div>
+</section>
