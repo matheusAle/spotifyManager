@@ -18,24 +18,41 @@ export class SpotifyService {
 
   public access: Access = new Access(null)
   public usuario: Usuario
-
+  
+  private headers
+  
   constructor(
-    private connection: HttpClient
-  ){}
+    private connection: HttpClient,
+    private router: Router
+  ){
+    let host = window.location.protocol + '//' +window.location.host;
+    
+    // se o app estiver rodando no github pages
+    if (host.indexOf('github') != -1){
+      host = host.concat('/spotifyManager')
+    }
+    env.redirect_uri = host.concat('/callback')
+  }
 
   
   public solicitarAcesso() {
-    let url: string = `${env.spotifyAuthoUrl}?client_id=${env.client_id}&redirect_uri=${env.redirect_uri}&scope=${env.scope}&response_type=token`
+    let url: string = `${env.spotifyOAuthUrl}?client_id=${env.client_id}&redirect_uri=${env.redirect_uri}&scope=${env.scope}&response_type=token`
     window.location.href = encodeURI(url)
-
   }
 
   public pegarInformacoesDoUsuario(): Promise<Usuario> {
+    
+    if (this.headers == undefined) {
+      this.headers = {
+        headers: {
+          'Authorization': `${this.access.token_type} ${this.access.access_token}`
+        }
+      }
+    }
+    
     return new Promise<Usuario>((resolve, reject) => {
-      this.connection.get(
-        `${env.spotify_api}/me`,
-        {headers: {'Authorization': `${this.access.token_type} ${this.access.access_token}`}}
-      ).toPromise()
+      this.connection.get( `${env.spotify_api}/me`, this.headers)
+        .toPromise()
         .then((resp: any) => {
           if (!!resp.error){
             console.log('spotify.service: ' + resp)
@@ -64,11 +81,13 @@ export class SpotifyService {
    * @return Pomise que busca e salva as playlists do usuario.
    * */
   public carregarPlaylists(url?: string): Promise<any>{
+    
+    //faz a soliciração para a primeira pagina de playlists para o usuario caso um urm expecifica não tenha sido solicitada
+    let req_url = !!!url ? `${env.spotify_api}/me/playlists` : url
+    
     return new Promise<any>((resolve, reject) => {
-      this.connection.get(
-        !!!url? `${env.spotify_api}/me/playlists` : url,
-        {headers: {'Authorization': `${this.access.token_type} ${this.access.access_token}`}}
-      ).toPromise()
+      this.connection.get(req_url, this.headers)
+        .toPromise()
         .then((resp: any) => {
 
           // caso seja retornado um erro pela plataforma do spotify
@@ -90,28 +109,23 @@ export class SpotifyService {
         })
     })
   }
-
-  /**
-   * Mapeia as playlists do usuario de acordo com seus ids
-   * @data resposta http da api do spotify.
-   * */
-  private salvarPlayLists(data: any): void{
-    for (let item of data.items)
-      this.usuario.playlists.set(item.id, new Playlist({
-        name: item.name,
-        id: item.id,
-        canEdit: item.collaborative || item.owner.id == this.usuario.id,
-        image_url: item.images[2] == undefined ? undefined : item.images[2].url,
-        tracks_url: item.href
-      }))
-  }
   
-  public carregarMusicas(tracks_url: string, playlistID: string): Promise<Musica> {
-    return new Promise<Musica>((resolve, reject) => {
-      this.connection.get(
-        `${env.spotify_api}`,
-        {headers: {'Authorization': `${this.access.token_type} ${this.access.access_token}`}}
-      ).toPromise()
+  /**
+   * Carrega as musicas da playlist informado.
+   *
+   * Obs.: O paramentro <i>tracks_url</i>  não deve ser informado, pois ele é
+   * de uso interno do serviço.
+   * @param playlist da playlist que deseja carregar as musicas.
+   * @param tracks_url (Opcional) url da pagina de musicas.
+   * */
+  public carregarMusicas(playlist: Playlist, tracks_url?: string): Promise<Playlist> {
+    
+    // filtra apenas os campos necessarios para o funcionamento da aplicação
+    let fields = 'items(track(album.name,artists.name,name,id,preview_url)),next'
+    
+    return new Promise<Playlist>((resolve, reject) => {
+      this.connection.get( `${playlist.tracks_url}?${fields}`, this.headers)
+        .toPromise()
         .then((resp: any) => {
           
           // caso seja retornado um erro pela plataforma do spotify
@@ -119,18 +133,17 @@ export class SpotifyService {
             console.log(['spotify.service: ',resp])
             reject('Erro ao ler as músicas')
           }
-  
+          
           // caso exista mais paginas de playlists
-          if (resp.next != null){
-            this.carregarMusicas(resp.next, playlistID).then((r: any) => {
-              this.salvarMusicas(r, playlistID)
+          if (resp.items.next != null){
+            this.carregarMusicas(playlist, resp.items.next).then((r: any) => {
+              this.salvarMusicas(r, playlist)
               resolve(resp)
             })
           } else {
-            this.salvarMusicas(resp, playlistID)
-            resolve(resp)
+            this.salvarMusicas(resp, playlist)
+            resolve(playlist)
           }
-          
         })
     })
   }
@@ -147,21 +160,43 @@ export class SpotifyService {
     }
   }
   
-  
   public getPlaylistById(id: string){
     return this.usuario.playlists.get(id)
   }
   
-  private salvarMusicas(resp: any, playlistID){
-    let playlist_tracks = this.getPlaylistById(playlistID).tracks
+  private salvarPlayLists(data: any): void{
+    for (let item of data.items) {
+      this.usuario.playlists.set(item.id, new Playlist({
+          name: item.name,
+          id: item.id,
+          canEdit: item.collaborative || item.owner.id == this.usuario.id,
+          image_url: item.images[2] == undefined ? undefined : item.images[2].url,
+          tracks_url: item.tracks.href,
+          tracks_total: item.total
+        })
+      )
+    }
+    
+  }
+  
+  private salvarMusicas(resp: any, playlist: Playlist){
+    let playlist_tracks = playlist.tracks
     for (let item of resp.items) {
-      playlist_tracks.add(new Musica({
+      playlist_tracks.push(new Musica({
         album_name: item.track.album.name,
-        artists_name: item.track.artists.name,
-        id: item.track.name,
+        artists_name: item.track.artists[0].name,
+        id: item.track.id,
         name: item.track.name,
         preview_url: item.track.preview_url
       }))
     }
+  }
+  
+  usuarioValido(): boolean {
+    if (this.access.access_token == undefined) {
+      this.router.navigate([''])
+    }
+    return this.access.access_token == undefined
+
   }
 }

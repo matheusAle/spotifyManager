@@ -10,11 +10,12 @@ import { PlaylistViewComponent } from './dashboard/playlist-view/playlist-view.c
 import {MaterialModule} from './material.module';
 import {CallbackComponent} from './callback/callback.component';
 import { SpotifyService } from './spotify.service';
-import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './routes.routes';
-import {DragulaModule} from "ng2-dragula";
-import {AppDragulaComponent} from "./dashboard/app-dragula/app-dragula.component";
+import {DragulaModule} from 'ng2-dragula';
+import {AppDragulaComponent} from './dashboard/app-dragula/app-dragula.component';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterGuard} from "./router-guard";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,10 @@ import {AppDragulaComponent} from "./dashboard/app-dragula/app-dragula.component
     RouterModule.forRoot(ROUTES),
     DragulaModule
   ],
-  providers: [SpotifyService],
+  providers: [
+    RouterGuard,
+    SpotifyService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ PlaylistViewComponent ],
 })

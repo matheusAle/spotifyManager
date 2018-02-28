@@ -4,10 +4,10 @@ import {CallbackComponent} from './callback/callback.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {SolicitarAcessoComponent} from './solicitar-acesso/solicitar-acesso.component';
 import {PlaylistViewComponent} from "./dashboard/playlist-view/playlist-view.component";
+import {RouterGuard} from "./router-guard";
 
 export const ROUTES: Routes = [
-  {path: '', component: SolicitarAcessoComponent},
+  {path: '', component: SolicitarAcessoComponent,},
   {path: 'callback', component: CallbackComponent},
-  {path: 'painel', component: DashboardComponent},
-  {path: 'painel/:id', component: DashboardComponent},
+  {path: 'painel', component: DashboardComponent, canActivate: [ RouterGuard ]}
 ]

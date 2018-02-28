@@ -22,7 +22,7 @@ export class CallbackComponent implements OnInit{
         this.msg_status = 'carregando suas playlists'
         this.api.carregarPlaylists()
           .then(resp => {
-            console.log(this.api.usuario)
+            console.log(['info', this.api.access, this.api.usuario])
             this.router.navigate(['/painel'])
           })
           .catch(m => this.msg_status = m);

@@ -6,7 +6,10 @@ mat-card {
   min-width: 400px;
   max-width: 400px;
   min-height: 95%;
+  max-height: 95%;
   margin-right: 16px;
+  overflow-y: auto;
+
 
   .pre-loader {
     display: flex;
@@ -26,5 +29,6 @@ mat-card {
     top: 24px;
     right: 0;
   }
+  
 }
 

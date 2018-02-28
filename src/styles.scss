@@ -23,11 +23,11 @@ $custom-typography: mat-typography-config(
 }
 
 ::-webkit-scrollbar-track {
-  background: gray;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: darkgray;
+  background: gray;
   border-radius: 5px;
 }
 

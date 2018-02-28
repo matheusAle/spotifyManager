@@ -1,6 +1,6 @@
 <mat-card>
   
-  <div class="pre-loader" *ngIf="playlistData == undefined; else card" >
+  <div class="pre-loader" *ngIf="playlist == undefined; else card" >
       <mat-spinner></mat-spinner>
       <h3 mat-subheader>{{ load_status }}</h3>
   </div>
@@ -9,8 +9,8 @@
     <mat-card-header>
       <button class="mat-flat-button close-btn" (click)="close($event)"><mat-icon>close</mat-icon></button>
       <img mat-card-avatar src="assets/icon-user.png">
-      <mat-card-title>{{ playlistData.name }}</mat-card-title>
-      <mat-card-subtitle> {{ playlistData.tracks.total }} musicas</mat-card-subtitle>
+      <mat-card-title>{{ playlist.name }}</mat-card-title>
+      <mat-card-subtitle> {{ playlist.tracks_total }} musicas</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
     
@@ -18,15 +18,10 @@
     <mat-card-content>
       <h3 matSubheader>Músicas</h3>
       <mat-list [dragula]='"lista-de-musicas-bag"'>
-        <mat-list-item>
+        <mat-list-item *ngFor="let musica of playlist.tracks" [id]="musica.id">
           <mat-icon matListIcon class="play-preview">play_arrow</mat-icon>
-          <h4 mat-line>Nome da música</h4>
-          <p mat-line>Artista, Album</p>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListIcon class="play-preview">play_arrow</mat-icon>
-          <h4 mat-line>Nome da música 2</h4>
-          <p mat-line>Artista, Album 2</p>
+          <h4 mat-line>{{ musica.name }}</h4>
+          <p mat-line>{{ musica.artists_name }}, {{ musica.album_name }}</p>
         </mat-list-item>
       </mat-list>
     </mat-card-content>

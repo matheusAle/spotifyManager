@@ -6,7 +6,8 @@ export class Playlist {
   name: string
   canEdit: boolean
   tracks_url: string
-  tracks: Set<Musica> = new Set()
+  tracks: Array<Musica> = new Array()
+  tracks_total: Number
   
   constructor(args){
     return Object.assign(this, args)
