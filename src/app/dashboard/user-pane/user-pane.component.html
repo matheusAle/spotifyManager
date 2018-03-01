@@ -14,9 +14,15 @@
     <mat-divider></mat-divider>
     <h3 mat-subheader>Suas Playlists</h3>
     
-    <mat-nav-list [dragula]='"playlist-bag"'>
-      <div *ngFor="let p of playlists" [id]="p.id">
-        <mat-list-item *ngIf="p.canEdit">
+    <mat-nav-list >
+      <div *ngFor="let p of playlists" >
+        <mat-list-item
+          *ngIf="p.canEdit"
+          dnd-draggable
+          [dragEnabled]="true"
+          [dragData]="p.id"
+          [disableRipple]="true"
+        >
           <img mat-list-icon [src]="p.image_url">
           <a matLine>{{ p.name }}</a>
         </mat-list-item>

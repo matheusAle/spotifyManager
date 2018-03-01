@@ -18,8 +18,8 @@ $custom-typography: mat-typography-config(
 
 /* definição de estilo da scrollbar do app*/
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -28,44 +28,28 @@ $custom-typography: mat-typography-config(
 
 ::-webkit-scrollbar-thumb {
   background: gray;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #303030;
+  background: rgba(124, 122, 128, 0.81);
 }
 
 /* final: definição de estilo da scrollbar do app*/
 
 /* defininção do estido dos componentes de arastart e soltar */
 /*veja: https://github.com/bevacqua/dragula#css*/
-.gu-mirror {
-  box-shadow: 2px 2px 5px 0 #303030;
-  background-color: darkmagenta;
-  cursor: grabbing;
-  position: fixed;
-  z-index: 9999;
-  padding: 5px;
-  display: flex;
-  flex-direction: row;
-  border-radius: 5px;
 
-  img {
-    border-radius: 100%;
-    margin: 0;
-    width: 50px;
+
+// classe usada pelo modulo ng2-dnd.
+// aplicada ao item sendo realocado dentro de uma lista ordenavel por ded.
+.dnd-sortable-drag {
+  background: inherit;
+
+  mat-icon, p, h4 {
+    color: gray;
   }
 
-  .mat-ripple-element {
-    display: none;
-  }
-
-  .mat-line {
-    position: absolute;
-    top: 20px;
-    left: 70px;
-    font-size: 18px;
-  }
 }
 
 /* final: defininção do estido dos componentes de arastart e soltar */

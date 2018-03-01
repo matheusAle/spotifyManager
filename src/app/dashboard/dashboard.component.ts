@@ -6,7 +6,6 @@ import {SpotifyService} from '../spotify.service';
 import {usuario} from '../shared/usuario.mock';
 import {access} from '../shared/access.mock';
 import {PlaylistViewComponent} from "./playlist-view/playlist-view.component";
-import {DragulaService} from "ng2-dragula";
 import {MatSnackBar} from "@angular/material";
 
 @Component({
@@ -24,25 +23,17 @@ export class DashboardComponent implements OnInit {
   constructor(
       public api: SpotifyService,
       private resolver: ComponentFactoryResolver,
-      private dragulaService: DragulaService,
       private injector: Injector,
-      public snackBar: MatSnackBar
+      public snackBar: MatSnackBar,
   ) {
-    
-    
-    // recebe as informações de cancelamento do evento e de arrastar
-    dragulaService.cancel.subscribe(val => {
-      
-      if (val[0] == 'playlist-bag') {
   
-        let id: string = val[1].id // pega o id da playlist do spotify definida como id do container html.
-        if (this.playlistsAbertas.has(id)) {
-          this.snackBar.open('Está playlist já está aberta!',null , {duration: 2000});
-        } else {
-          this.criarPlaylistView(val[1].id)
-        }
-      }
-    })
+  
+    // let id: string = val[1].id // pega o id da playlist do spotify definida como id do container html.
+    // if (this.playlistsAbertas.has(id)) {
+    //   this.snackBar.open('Está playlist já está aberta!',null , {duration: 2000});
+    // } else {
+    //   this.criarPlaylistView(val[1].id)
+    // }
   }
   
   /**
@@ -64,6 +55,14 @@ export class DashboardComponent implements OnInit {
   }
   
   ngOnInit() {
+  }
+  
+  public dropEvent(event) {
+    if (this.playlistsAbertas.has(event.dragData)) {
+      this.snackBar.open('Está playlist já está aberta!',null , {duration: 1500});
+    } else {
+      this.criarPlaylistView(event.dragData)
+    }
   }
 
 }

@@ -12,10 +12,10 @@ import {CallbackComponent} from './callback/callback.component';
 import { SpotifyService } from './spotify.service';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './routes.routes';
-import {DragulaModule} from 'ng2-dragula';
-import {AppDragulaComponent} from './dashboard/app-dragula/app-dragula.component';
 import {HttpClientModule} from '@angular/common/http';
-import {RouterGuard} from "./router-guard";
+import {RouterGuard} from './router-guard';
+import {DndModule} from 'ng2-dnd';
+import {MatIconRegistry} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -26,7 +26,6 @@ import {RouterGuard} from "./router-guard";
     UserPaneComponent,
     PlaylistViewComponent,
     CallbackComponent,
-    AppDragulaComponent
   ],
   imports: [
     BrowserModule,
@@ -34,13 +33,16 @@ import {RouterGuard} from "./router-guard";
     MaterialModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    DragulaModule
+    DndModule.forRoot()
   ],
   providers: [
     RouterGuard,
-    SpotifyService
+    SpotifyService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [ PlaylistViewComponent ],
 })
-export class AppModule { }
+export class AppModule {
+
+
+}

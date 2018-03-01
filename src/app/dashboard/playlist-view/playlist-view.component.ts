@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {DragulaService} from "ng2-dragula";
 import {SpotifyService} from "../../spotify.service";
 import {Playlist} from "../../shared/playlist.model";
 

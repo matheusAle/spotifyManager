@@ -10,7 +10,6 @@ mat-card {
   margin-right: 16px;
   overflow-y: auto;
 
-
   .pre-loader {
     display: flex;
     flex-direction: column;
@@ -29,6 +28,10 @@ mat-card {
     top: 24px;
     right: 0;
   }
-  
+
+  svg {
+    fill: currentColor;
+  }
+
 }
 

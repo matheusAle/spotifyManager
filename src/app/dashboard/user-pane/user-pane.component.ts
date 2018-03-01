@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {SpotifyService} from '../../spotify.service';
-import {DragulaService} from "ng2-dragula";
 
 @Component({
   selector: 'app-user-pane',
@@ -13,7 +12,7 @@ export class UserPaneComponent implements OnInit {
   
   
   
-  constructor( public api: SpotifyService, private dragulaService: DragulaService ) {
+  constructor( public api: SpotifyService) {
     
     let p: Map<string, any> = api.usuario.playlists
     let int: IterableIterator<string> = p.keys()

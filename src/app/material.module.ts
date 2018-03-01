@@ -1,8 +1,9 @@
 import {
   MatAutocompleteModule, MatButtonModule,
-  MatButtonToggleModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDatepickerModule, MatDialogModule, MatExpansionModule,
+  MatButtonToggleModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDatepickerModule, MatDialogModule,
+  MatExpansionModule,
   MatGridListModule,
-  MatIconModule,
+  MatIconModule, MatIconRegistry,
   MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatPaginatorModule,
@@ -10,7 +11,8 @@ import {
   MatProgressSpinnerModule,
   MatRadioModule,
   MatRippleModule,
-  MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatStepperModule,
+  MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule,
+  MatStepperModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
@@ -89,4 +91,10 @@ import {NgModule} from '@angular/core';
     MatTooltipModule,
   ]
 })
-export class MaterialModule {}
+export class MaterialModule {
+  
+  constructor(private iconRegistry: MatIconRegistry) {
+    iconRegistry.addSvgIcon('play_arrow', 'https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_play_arrow_black_24px.svg')
+  }
+  
+}
