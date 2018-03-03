@@ -92,9 +92,5 @@ import {NgModule} from '@angular/core';
   ]
 })
 export class MaterialModule {
-  
-  constructor(private iconRegistry: MatIconRegistry) {
-    iconRegistry.addSvgIcon('play_arrow', 'https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_play_arrow_black_24px.svg')
-  }
-  
+
 }

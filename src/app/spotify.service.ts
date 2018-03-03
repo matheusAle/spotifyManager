@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {environment as env} from '../environments/environment';
 import {Access} from './shared/Access.model';
 import 'rxjs/operator/toPromise'
-import {usuario} from "./shared/usuario.mock";
 import {Usuario} from "./shared/usuario.model";
 import {Playlist} from "./shared/playlist.model";
 import {Musica} from "./shared/musica.model";
@@ -166,15 +165,16 @@ export class SpotifyService {
   
   private salvarPlayLists(data: any): void{
     for (let item of data.items) {
-      this.usuario.playlists.set(item.id, new Playlist({
-          name: item.name,
-          id: item.id,
-          canEdit: item.collaborative || item.owner.id == this.usuario.id,
-          image_url: item.images[2] == undefined ? undefined : item.images[2].url,
-          tracks_url: item.tracks.href,
-          tracks_total: item.total
-        })
-      )
+      if (item.collaborative || item.owner.id == this.usuario.id) {
+        this.usuario.playlists.set(item.id, new Playlist({
+            name: item.name,
+            id: item.id,
+            image_url: item.images[2] == undefined ? undefined : item.images[2].url,
+            tracks_url: item.tracks.href,
+            tracks_total: item.total
+          })
+        )
+      }
     }
     
   }
