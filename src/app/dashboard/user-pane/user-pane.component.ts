@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SpotifyService} from '../../spotify.service';
+import {MusicaPreviewService} from "../../musica-preview.service";
 
 @Component({
   selector: 'app-user-pane',
@@ -12,7 +13,7 @@ export class UserPaneComponent implements OnInit {
   
   
   
-  constructor( public api: SpotifyService) {
+  constructor( public api: SpotifyService, public previewService: MusicaPreviewService) {
     
     let p: Map<string, any> = api.usuario.playlists
     let int: IterableIterator<string> = p.keys()

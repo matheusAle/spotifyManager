@@ -15,20 +15,21 @@
     <h3 mat-subheader>Suas Playlists</h3>
     
     <mat-nav-list >
-      <div *ngFor="let p of playlists" >
         <mat-list-item
-          *ngIf="p.canEdit"
+          *ngFor="let p of playlists"
           dnd-draggable
           [dragEnabled]="true"
           [dragData]="p.id"
           [disableRipple]="true"
+          [dropZones]="['user-pane-item']"
         >
           <img mat-list-icon [src]="p.image_url">
           <a matLine>{{ p.name }}</a>
         </mat-list-item>
-      </div>
-      
-
     </mat-nav-list>
+    
+    <div>
+      <audio [src]="previewService.url" autoplay controls></audio>
+    </div>
   </div>
 </section>

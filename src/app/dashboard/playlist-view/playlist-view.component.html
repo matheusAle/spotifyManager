@@ -18,14 +18,21 @@
     </mat-card-actions>
     <mat-card-content>
       <h3 matSubheader>Músicas</h3>
-      <mat-list dnd-sortable-container [sortableData]="playlist.tracks">
-        <mat-list-item *ngFor="let musica of playlist.tracks; let i = index" [id]="musica.id" dnd-sortable [sortableIndex]="i">
-          <mat-icon matListIcon>
+      <mat-list dnd-sortable-container [sortableData]="playlist.tracks" >
+        <mat-list-item
+          *ngFor="let musica of playlist.tracks; let i = index"
+          dnd-sortable
+          [sortableIndex]="i"
+          (onDragStart)="mg.dropInitEvent(musica, playlist.name, i)"
+          (onDropSuccess)="mg.dropEndEvent(musica, playlist.name, i)"
+        >
+
+          <mat-icon matListIcon (click)="previewService.preview(musica.preview_url)">
             <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 5v14l11-7z"/>
               <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
-          </mat-icon>
+            </mat-icon>
           <h4 mat-line>{{ musica.artists_name }}, {{ musica.album_name }}</h4>
           <p mat-line>{{ musica.name }}</p>
         </mat-list-item>

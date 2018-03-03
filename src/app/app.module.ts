@@ -16,6 +16,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterGuard} from './router-guard';
 import {DndModule} from 'ng2-dnd';
 import {MatIconRegistry} from "@angular/material";
+import {MusicaManager} from "./musica-manager.service";
+import {MusicaPreviewService} from "./musica-preview.service";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {MatIconRegistry} from "@angular/material";
   providers: [
     RouterGuard,
     SpotifyService,
+    MusicaManager,
+    MusicaPreviewService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ PlaylistViewComponent ],

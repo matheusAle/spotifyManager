@@ -3,8 +3,6 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {SpotifyService} from '../spotify.service';
-import {usuario} from '../shared/usuario.mock';
-import {access} from '../shared/access.mock';
 import {PlaylistViewComponent} from "./playlist-view/playlist-view.component";
 import {MatSnackBar} from "@angular/material";
 

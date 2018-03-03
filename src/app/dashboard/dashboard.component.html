@@ -10,7 +10,7 @@
     <app-user-pane></app-user-pane>
   </mat-sidenav>
   
-  <mat-sidenav-content dnd-droppable (onDropSuccess)="dropEvent($event)">
+  <mat-sidenav-content dnd-droppable (onDropSuccess)="dropEvent($event)" [dropZones]="['user-pane-item']">
     <div #playlistsContainer id="playlistsContainer"></div>
   </mat-sidenav-content>
 </mat-sidenav-container>
