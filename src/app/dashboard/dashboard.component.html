@@ -1,15 +1,17 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
-  <h1>Spotify Manager</h1>
+  <span><button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button></span>
+  <span>Spotify Manager</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="sair()"><mat-icon>exit_to_app</mat-icon></button>
 </mat-toolbar>
 
 <mat-sidenav-container>
-  
+
   <!-- navegação do usuario. Contem as informações pessoais e uma lista com as playlists do mesmo -->
   <mat-sidenav mode="side" [opened]="true" #drawer>
     <app-user-pane></app-user-pane>
   </mat-sidenav>
-  
+
   <mat-sidenav-content dnd-droppable (onDropSuccess)="dropEvent($event)" [dropZones]="['user-pane-item']">
     <div #playlistsContainer id="playlistsContainer"></div>
   </mat-sidenav-content>

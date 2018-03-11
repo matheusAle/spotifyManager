@@ -2,18 +2,18 @@
 
   <div class="card-user">
     <div class="perfil-image">
-      <img [src]="api.usuario.prifile_image || 'assets/icon-user.png'">
+      <img [src]="usuario.prifile_image || 'assets/icon-user.png'">
     </div>
     <div class="perfil-info">
-      <h4>{{ api.usuario.display_name || api.usuario.id }}</h4>
-      <h5> {{ api.usuario.email }}</h5>
+      <h4>{{ usuario.display_name || usuario.id }}</h4>
+      <h5> {{ usuario.email }}</h5>
     </div>
   </div>
-  
+
   <div class="playlists">
     <mat-divider></mat-divider>
     <h3 mat-subheader>Suas Playlists</h3>
-    
+
     <mat-nav-list >
         <mat-list-item
           *ngFor="let p of playlists"
@@ -27,7 +27,7 @@
           <a matLine>{{ p.name }}</a>
         </mat-list-item>
     </mat-nav-list>
-    
+
     <div>
       <audio [src]="previewService.url" autoplay controls></audio>
     </div>

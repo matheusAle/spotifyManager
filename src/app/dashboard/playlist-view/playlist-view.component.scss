@@ -2,11 +2,12 @@ $break-small: 450px;
 $break-large: 1200px;
 
 mat-card {
+  box-sizing: border-box;
   position: relative;
   min-width: 400px;
   max-width: 400px;
-  min-height: 95%;
-  max-height: 95%;
+  min-height: 100%;
+  max-height: 100%;
   margin-right: 16px;
   overflow-y: auto;
 

@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {SpotifyService} from "../../spotify.service";
+import {SpotifyService} from "../../core/services/spotify.service";
 import {Playlist} from "../../shared/playlist.model";
 import {Musica} from "../../shared/musica.model";
-import {MusicaManager} from "../../musica-manager.service";
-import {MusicaPreviewService} from "../../musica-preview.service";
+import {MusicaManager} from "../../core/services/musica-manager.service";
+import {MusicaPreviewService} from "../../core/services/musica-preview.service";
+import {SessionService} from '../../core/services/session.service';
 
 @Component({
   selector: 'app-playlist-view',
@@ -16,11 +17,14 @@ export class PlaylistViewComponent implements OnInit {
   public playlist: Playlist
   public load_status: string  = 'carregando playlist'
   public dndMusica: any = {}
-  
-  constructor( private api: SpotifyService, public mg: MusicaManager, public previewService: MusicaPreviewService) {}
-  
+
+  constructor( private api: SpotifyService,
+               public mg: MusicaManager,
+               public previewService: MusicaPreviewService,
+               private session: SessionService) {}
+
   public carregarPlaylist(id: string): void {
-    this.api.carregarMusicas(this.api.getPlaylistById(id))
+    this.api.carregarMusicas(this.session.getPlaylistById(id))
       .then(playlist => {
         this.playlist = playlist
       })
@@ -29,13 +33,13 @@ export class PlaylistViewComponent implements OnInit {
         this.load_status = err
       })
   }
-  
+
   ngOnInit(){}
-  
-  
-  
+
+
+
   close(event) {
     this.destruir.emit(this.playlist.id)
   }
-  
+
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {SpotifyService} from '../spotify.service';
+import {SpotifyService} from '../core/services/spotify.service';
 import {environment} from "../../environments/environment";
+import {SessionService} from '../core/services/session.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-solicitar-acesso',
@@ -9,15 +11,24 @@ import {environment} from "../../environments/environment";
 })
 export class SolicitarAcessoComponent implements OnInit {
 
+  constructor(private spotifyService: SpotifyService,
+              private session: SessionService,
+              private router: Router){
 
-
-  constructor(private spotifyService: SpotifyService){
     if (!environment.production)
       this.conectar()
   }
 
   conectar(): void {
-    this.spotifyService.solicitarAcesso();
+
+    let valida = this.session.carregarSessaoAnterior()
+
+    if (valida) {
+      this.router.navigate(['/painel'])
+    } else {
+      this.spotifyService.solicitarAcesso();
+    }
+
   }
 
   ngOnInit() {
