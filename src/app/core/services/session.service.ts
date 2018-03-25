@@ -83,13 +83,13 @@ export class SessionService {
    * @return {boolean}
    */
   public carregarSessaoAnterior(): boolean{
-    // recupera o valor
+    // recupera os dados sa sessão anterior.
     let dados = JSON.parse(localStorage.getItem('sessao'))
 
     if (dados != null) {
 
-      // reculera os valores apenas se o token nção tiver expirado
-      if (new Date().getMilliseconds() < dados.access.expires_in) {
+      // recupera os valores apenas se o token nção tiver expirado
+      if (new Date().getTime() < dados.access.expires_in) {
         this.access = dados.access
         this.playlistsAbertas = dados.playlistsAbertas
         this.usuario = new Usuario(dados.usuario)

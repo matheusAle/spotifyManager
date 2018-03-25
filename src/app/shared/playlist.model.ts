@@ -6,9 +6,9 @@ export class Playlist {
   name: string
   tracks_url: string
   tracks: Array<Musica> = new Array()
-  tracks_total: Number
-  
-  constructor(args){
+  tracks_total: string
+
+  constructor(args) {
     return Object.assign(this, args)
   }
 }
