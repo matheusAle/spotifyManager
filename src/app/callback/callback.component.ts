@@ -19,7 +19,7 @@ export class CallbackComponent implements OnInit{
 
   ngOnInit() {
     let access = this.lerOsParamentrosDaUrl(window.location.href)
-    access.expires_in = new Date().getMilliseconds() + access.expires_in
+    access.expires_in = new Date().getTime() + access.expires_in
 
     this.session.setAccessToken(access)
 

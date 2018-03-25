@@ -9,6 +9,7 @@ import {Usuario} from "../../shared/usuario.model";
 import {Playlist} from "../../shared/playlist.model";
 import {Musica} from "../../shared/musica.model";
 import {SessionService} from './session.service';
+import {promise} from 'selenium-webdriver';
 /**
  * Classe que gerencia a comunicação do app com a API do spotify.
  *
@@ -140,7 +141,7 @@ export class SpotifyService {
             id: item.id,
             image_url: item.images[2] == undefined ?  undefined : item.images[2].url,
             tracks_url: item.tracks.href,
-            tracks_total: item.total
+            tracks_total: item.tracks.total
           })
         )
       }
@@ -158,6 +159,21 @@ export class SpotifyService {
         preview_url: item.track.preview_url
       }))
     })
+  }
+
+
+  public reordenarPlaylist(playlistID: string, indexAntigo: number, indexNovo: number): Promise<any>{
+    return new Promise(((resolve, reject) => {
+      let url = `${env.spotify_api}/users/${this.session.getUsuario().id}/playlists/${playlistID}/tracks`
+      this.connection.put(url, {
+        "range_start": indexAntigo,
+        "range_length": 1,
+        "insert_before": indexNovo+1
+      }, this.session.getHeader()).toPromise()
+        .then((resposta) => resolve(resposta))
+    }))
+
+
   }
 
 }

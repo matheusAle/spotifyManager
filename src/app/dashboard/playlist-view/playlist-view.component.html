@@ -1,20 +1,20 @@
 <mat-card>
-  
+
   <div class="pre-loader" *ngIf="playlist == undefined; else card" >
       <mat-spinner></mat-spinner>
       <h3 mat-subheader>{{ load_status }}</h3>
   </div>
-  
+
   <ng-template #card>
     <mat-card-header>
-      
+
       <button class="mat-flat-button close-btn" (click)="close($event)"><mat-icon>close</mat-icon></button>
       <img mat-card-avatar src="assets/icon-user.png">
       <mat-card-title>{{ playlist.name }}</mat-card-title>
       <mat-card-subtitle> {{ playlist.tracks_total }} musicas</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-    
+
     </mat-card-actions>
     <mat-card-content>
       <h3 matSubheader>Músicas</h3>
@@ -23,8 +23,8 @@
           *ngFor="let musica of playlist.tracks; let i = index"
           dnd-sortable
           [sortableIndex]="i"
-          (onDragStart)="mg.dropInitEvent(musica, playlist.name, i)"
-          (onDropSuccess)="mg.dropEndEvent(musica, playlist.name, i)"
+          (onDragStart)="mg.dropInitEvent(musica, playlist.id, i)"
+          (onDropSuccess)="mg.dropEndEvent(musica, playlist.id, i)"
         >
 
           <mat-icon matListIcon (click)="previewService.preview(musica.preview_url)">

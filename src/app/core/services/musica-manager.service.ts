@@ -64,16 +64,18 @@ export class MusicaManager {
 
 
   private reordenarMusica(playlist: string, oldIndex: number, newindex: number, musicaID: string) {
-    console.log(['reordenar',arguments])
+    console.log(['reordenar', arguments]);
+    this.spotifyService.reordenarPlaylist(playlist, oldIndex, newindex)
+      .then((resposta) => console.log(resposta));
   }
 
   private removerMusicaDaPlaylist(playlist_drag: any, id: string) {
-    console.log(['remover',arguments])
+    console.log(['remover', arguments]);
 
   }
 
   private adicionarMusicaNaPlaylist(playlist_drag: string, id: string, new_index: number) {
-    console.log(['adicionar',arguments])
+    console.log(['adicionar', arguments]);
 
   }
 }
